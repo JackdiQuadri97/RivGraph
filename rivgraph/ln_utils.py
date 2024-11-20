@@ -889,7 +889,7 @@ def remove_all_spurs(links, nodes, dontremove=[]):
 
         # Remove self-looping links (a link that starts and ends at the same node)
         for nid, con in zip(nodes['id'], nodes['conn']):
-            m = mode(con)
+            m = mode(con, keepdims=True)
             if m.count[0] > 1:
                 # Get link
                 looplink = m.mode[0]
