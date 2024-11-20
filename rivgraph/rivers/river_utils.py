@@ -617,7 +617,7 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
             Ao = np.insert(Ao, 0, 0)
             An = np.insert(An, 0, 0)
 
-            distance, path = fastdtw(Ao, An, dist=euclidean)
+            distance, path = fastdtw(Ao, An, dist=2)
             path = np.array(path)
 
             mapper.append(path)
