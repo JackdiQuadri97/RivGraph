@@ -579,19 +579,18 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
             int_pt = tsect.intersection(cl)
             print(int_pt)
             print(int_pt.coords.is_empty)
-            
-            if int_pt.coords == [] or int_pt.is_empty:  # There is no intersection
-                print('no intersection')
-                # int_pts.append(None)
-                dist_to_int.append(None)
-                continue
-                
-            print(int_pt.coords.is_empty)
 
             # Project the intersection point to the centerline and return
             # the along-centerline distance of this point
             projpt = float(cl.project(int_pt))
             print(projpt)
+
+            if projpt==np.nan:  # There is no intersection
+                print('no intersection')
+                # int_pts.append(None)
+                dist_to_int.append(None)
+                continue
+                
             if projpt == -1: # This catches GEOS Runtime errors (return -1s)
                 dist_to_int.append(None)
             else:
