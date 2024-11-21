@@ -551,7 +551,7 @@ def dir_centerline(links, nodes, meshpolys, meshlines, Imask, gt, pixlen):
     node_gdf = gpd.GeoDataFrame(geometry=[Point(x, y) for x, y in zip(nodecoords[0], nodecoords[1])], index=nodes['id'])
 
     # Determine which meshpoly each node lies within
-    intersect = gpd.sjoin(node_gdf, mp_gdf, op='intersects', rsuffix='right')
+    intersect = gpd.sjoin(node_gdf, mp_gdf, predicate='intersects', rsuffix='right')
 
     # Compute guess and certainty, where certainty is how many transects apart
     # the link endpoints are (longer=more certain)
