@@ -789,10 +789,19 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
 
     lpts = get_transect_indices_along_buffered_lines(cl2, lmap)
     rpts = get_transect_indices_along_buffered_lines(cl2, rmap)
-
+    print('lpts nad rpts:')
+    print(lpts)
+    print(rpts)
+                        
     endpts = get_transect_endpoints_xy(lpts, rpts)
 
+    print('endpts:')
+    print(endpts)
+    
     dists, cl_clip, ep_clip = find_cl_intersection_pts_and_distance(endpts, cl2)
+    print('dists before float:')
+    print(dists)
+                        
     dists = np.array([float(d) for d in dists])  # avoid dtype('O') error in numpy.interp
 
     # Now build the interpolating functions
