@@ -578,6 +578,7 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
             
             int_pt = tsect.intersection(cl)
             print(int_pt)
+            print(int_pt.coords)
             
             if int_pt.coords == []:  # There is no intersection
                 print('no intersection')
