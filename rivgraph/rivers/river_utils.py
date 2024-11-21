@@ -568,11 +568,19 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
         """
         # int_pts = []
         dist_to_int = []
+        print('inside cl_intersection...')
         for ie, eps in enumerate(endpts):
+            print('enum step')
+            print(eps)
+            
             tsect = LineString(eps)
+            print(tsect)
+            
             int_pt = tsect.intersection(cl)
-
+            print(int_pt)
+            
             if int_pt.coords == []:  # There is no intersection
+                print('no intersection')
                 # int_pts.append(None)
                 dist_to_int.append(None)
                 continue
@@ -580,6 +588,7 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
             # Project the intersection point to the centerline and return
             # the along-centerline distance of this point
             projpt = float(cl.project(int_pt))
+            print(projpt)
             if projpt == -1: # This catches GEOS Runtime errors (return -1s)
                 dist_to_int.append(None)
             else:
@@ -588,16 +597,21 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
             # int_pts.append(int_pt)
 
         dist_to_int = np.array(dist_to_int)
-
+        print(dist_to_int)
+        
         # Now clip the distances, centerline, and endpoints where there were no intersections
         no_ints = dist_to_int == None
         dist_to_int = dist_to_int[~no_ints]
+        print(dist_to_int)
         # int_pts = [ip for i, ip in enumerate(int_pts) if no_ints[i] == False]
         cl_clip = LineString(zip(np.array(cl.coords.xy[0])[~no_ints], np.array(cl.coords.xy[1])[~no_ints]))
+        print(cl_clip)
         ep_clip = [ep for iep, ep in enumerate(endpts) if no_ints[iep] == False]
+        print(ep_clip)
 
         # Reset the origin
         dist_to_int = dist_to_int - dist_to_int[0]
+        print(dist_to_int)
 
         return dist_to_int, cl_clip, ep_clip
 
@@ -789,14 +803,13 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
 
     lpts = get_transect_indices_along_buffered_lines(cl2, lmap)
     rpts = get_transect_indices_along_buffered_lines(cl2, rmap)
-    print('lpts nad rpts:')
-    print(lpts)
-    print(rpts)
                         
     endpts = get_transect_endpoints_xy(lpts, rpts)
 
     print('endpts:')
     print(endpts)
+    print('cl2:')
+    print(cl2)
     
     dists, cl_clip, ep_clip = find_cl_intersection_pts_and_distance(endpts, cl2)
     print('dists before float:')
@@ -807,10 +820,6 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
     # Now build the interpolating functions
     print('dists:')
     print(dists)
-    print('max(dists):')
-    print(np.max(dists))
-    print('grid_spacing:')
-    print(grid_spacing)
     dists_to_interpolate = np.arange(0, np.max(dists), grid_spacing)
     xp_l = np.array([ep[0][0] for ep in ep_clip])
     yp_l = np.array([ep[0][1] for ep in ep_clip])
