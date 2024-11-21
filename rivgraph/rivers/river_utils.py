@@ -580,7 +580,7 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
             print(int_pt)
             print(int_pt.coords)
             
-            if int_pt.coords == []:  # There is no intersection
+            if int_pt.coords == [] or int_pt == np.nan:  # There is no intersection
                 print('no intersection')
                 # int_pts.append(None)
                 dist_to_int.append(None)
