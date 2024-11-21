@@ -578,7 +578,6 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
             
             int_pt = tsect.intersection(cl)
             print(int_pt)
-            print(int_pt.coords.is_empty)
 
             # Project the intersection point to the centerline and return
             # the along-centerline distance of this point
