@@ -796,6 +796,12 @@ def valleyline_mesh(coords, avg_chan_width, buf_halfwidth, grid_spacing,
     dists = np.array([float(d) for d in dists])  # avoid dtype('O') error in numpy.interp
 
     # Now build the interpolating functions
+    print('dists:')
+    print(dists)
+    print('max(dists):')
+    print(np.max(dists))
+    print('grid_spacing:')
+    print(grid_spacing)
     dists_to_interpolate = np.arange(0, np.max(dists), grid_spacing)
     xp_l = np.array([ep[0][0] for ep in ep_clip])
     yp_l = np.array([ep[0][1] for ep in ep_clip])
